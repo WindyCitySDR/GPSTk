@@ -199,6 +199,8 @@ def main():
     out_file.write('import constants\n')
     out_file.write('import exceptions\n')
 
+    out_file.close()
+    
     # Create gpstk folder, move things into it
     # we don't know extension of library file, so search the directory:
     files = [f for f in os.listdir('.') if os.path.isfile(f)]
@@ -207,14 +209,20 @@ def main():
             files_to_move.append(f)
 
     # build to local gpstk folder
+    import shutil
+
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
     for f in files_to_move:
         if os.path.exists(f):
-            os.rename(f, out_dir + f)
+            print "f:",f,"out_dir:",out_dir
+            #os.rename(f, out_dir + f)
+            shutil.move(f, out_dir + f)
         # adds pyc file if it exists:
         if os.path.exists(f + 'c'):
-            os.rename(f + 'c', out_dir + f + 'c')
+            print "f:",f,"out_dir:",out_dir
+            #os.rename(f + 'c', out_dir + f + 'c')
+            shutil.move(f + 'c', out_dir + f + 'c')
 
 
 if __name__ == '__main__':
